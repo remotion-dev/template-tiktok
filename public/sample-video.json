@@ -1,0 +1,40 @@
+{
+	"systeminfo": "AVX = 0 | AVX2 = 0 | AVX512 = 0 | FMA = 0 | NEON = 1 | ARM_FMA = 1 | METAL = 1 | F16C = 0 | FP16_VA = 1 | WASM_SIMD = 0 | BLAS = 1 | SSE3 = 0 | SSSE3 = 0 | VSX = 0 | CUDA = 0 | COREML = 0 | OPENVINO = 0 | ",
+	"model": {
+		"type": "base",
+		"multilingual": false,
+		"vocab": 51864,
+		"audio": {"ctx": 1500, "state": 512, "head": 8, "layer": 6},
+		"text": {"ctx": 448, "state": 512, "head": 8, "layer": 6},
+		"mels": 80,
+		"ftype": 1
+	},
+	"params": {
+		"model": "models/ggml-base.en.bin",
+		"language": "en",
+		"translate": false
+	},
+	"result": {"language": "en"},
+	"transcription": [
+		{"offsets": {"from": 100, "to": 330}, "text": " Using"},
+		{"offsets": {"from": 330, "to": 1090}, "text": "Remocean's"},
+		{"offsets": {"from": 1090, "to": 1350}, "text": "TikTok"},
+		{"offsets": {"from": 1350, "to": 1960}, "text": "template,"},
+		{"offsets": {"from": 1960, "to": 2200}, "text": "you can"},
+		{"offsets": {"from": 2200, "to": 2860}, "text": "create"},
+		{"offsets": {"from": 2860, "to": 3760}, "text": "engaging"},
+		{"offsets": {"from": 3760, "to": 4390}, "text": "reels"},
+		{"offsets": {"from": 4390, "to": 4790}, "text": "and"},
+		{"offsets": {"from": 4790, "to": 5520}, "text": "TikToks"},
+		{"offsets": {"from": 5520, "to": 7130}, "text": "programmatically"},
+		{"offsets": {"from": 7130, "to": 8660}, "text": "by transcribing"},
+		{"offsets": {"from": 8660, "to": 8950}, "text": "your"},
+		{"offsets": {"from": 8950, "to": 9430}, "text": "audio"},
+		{"offsets": {"from": 9430, "to": 9940}, "text": "using"},
+		{"offsets": {"from": 9940, "to": 10710}, "text": "Visber"},
+		{"offsets": {"from": 10710, "to": 11320}, "text": "and giving"},
+		{"offsets": {"from": 11320, "to": 11680}, "text": "each"},
+		{"offsets": {"from": 11680, "to": 12310}, "text": "word"},
+		{"offsets": {"from": 12310, "to": 13180}, "text": "an animation."}
+	]
+}

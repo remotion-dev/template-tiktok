@@ -1,0 +1,31 @@
+{
+  "name": "whisper-template",
+  "version": "1.0.0",
+  "description": "My Remotion video",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render SubbedVideo out/video.mp4",
+    "upgrade": "remotion upgrade",
+    "test": "eslint src --ext ts,tsx,js,jsx && tsc",
+    "create-subtitles": "node sub.mjs"
+  },
+  "repository": {},
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@remotion/cli": "4.0.111",
+    "@remotion/zod-types": "4.0.111",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "remotion": "4.0.111",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config": "4.0.111",
+    "@types/react": "^18.0.26",
+    "@types/web": "^0.0.86",
+    "eslint": "^8.43.0",
+    "prettier": "^2.8.8",
+    "typescript": "^4.9.4"
+  },
+  "packageManager": "npm@9.6.7"
+}
