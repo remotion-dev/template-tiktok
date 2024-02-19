@@ -11,6 +11,15 @@ import {
 import os from 'node:os';
 import path from 'path';
 import prettier from 'prettier';
+import {
+	WHISPER_MODEL,
+	WHISPER_PATH,
+	WHISPER_VERSION,
+} from './whisper-config.mjs';
+import {
+	downloadWhisperModel,
+	installWhisperCpp,
+} from '@remotion/install-whisper-cpp';
 
 function mergeTranscriptions(transcriptions) {
 	const merged = [];
@@ -54,69 +63,47 @@ function mergeTranscriptions(transcriptions) {
 	return merged;
 }
 
-const isWhisperInstalled = () => {
-	if (os.platform() === 'darwin' || os.platform() === 'linux') {
-		return existsSync(path.join(process.cwd(), 'whisper.cpp'));
-	}
-
-	if (os.platform() === 'win32') {
-		return existsSync(path.join(process.cwd(), 'whisper-bin-x64'));
-	}
-};
-
 const extractToTempAudioFile = (fileToTranscribe, tempOutFile) => {
 	// extracting audio from mp4 and save it as 16khz wav file
 	execSync(
-		`npx remotion ffmpeg -i ${fileToTranscribe} -ar 16000 ${tempOutFile}`,
+		`npx remotion ffmpeg -i ${fileToTranscribe} -ar 16000 ${tempOutFile} -y`,
+		{stdio: 'inherit'},
 	);
 };
 
 const subFile = async (filePath, fileName, folder) => {
-	// defining the output file location and name
-	console.log({fileName});
 	const outPath = path.join(
 		process.cwd(),
-		`public/${folder}/${fileName.replace('.wav', '.json')}`,
+		'public',
+		folder,
+		fileName.replace('.wav', '.json'),
 	);
 
-	if (os.platform() === 'darwin' || os.platform() === 'linux') {
-		execSync(
-			`./main -f ${filePath} --output-file ${
-				outPath.split('.')[0]
-			} --output-json --max-len 1 `,
-			{cwd: path.join(process.cwd(), 'whisper.cpp')},
-		);
-	} else if (os.platform() === 'win32') {
-		execSync(
-			`main.exe -f ${filePath} --output-file ${
-				outPath.split('.')[0]
-			} --output-json --max-len 1 `,
-			{cwd: path.join(process.cwd(), 'whisper-bin-x64')},
-		);
-	}
+	const executable = os.platform() === 'win32' ? 'main.exe' : './main';
+
+	const modelPath = path.join(WHISPER_PATH, `ggml-${WHISPER_MODEL}.bin`);
+
+	execSync(
+		`${executable} -f ${filePath} --output-file ${
+			outPath.split('.')[0]
+		} --output-json --max-len 1 -m ${modelPath}`,
+		{cwd: WHISPER_PATH},
+	);
 
 	let json = readFileSync(outPath, 'utf8');
 	const parsedJson = await JSON.parse(json);
 	const mergedTranscriptions = mergeTranscriptions(parsedJson.transcription);
 	parsedJson.transcription = mergedTranscriptions;
-	json = JSON.stringify(parsedJson);
 	const options = await prettier.resolveConfig('.');
-	const formatted = await prettier.format(json, {...options, parser: 'json'});
+	const formatted = await prettier.format(JSON.stringify(parsedJson), {
+		...options,
+		parser: 'json',
+	});
 	writeFileSync(outPath.replace('webcam', 'subs'), formatted);
 	rmSync(filePath);
 };
 
-if (!isWhisperInstalled()) {
-	console.log('Whisper not installed');
-	execSync(`node whisper-init.mjs`, {stdio: 'inherit'});
-}
-
-if (!isWhisperInstalled()) {
-	console.log('Whisper not installed. Exiting...');
-	process.exit(1);
-}
-
-const checkAndProcessFile = async (fullPath, entry, directory) => {
+const processVideo = async (fullPath, entry, directory) => {
 	if (!fullPath.endsWith('.mp4')) {
 		return;
 	}
@@ -148,7 +135,7 @@ const checkAndProcessFile = async (fullPath, entry, directory) => {
 	}
 };
 
-async function processDirectory(directory) {
+const processDirectory = async (directory) => {
 	const entries = readdirSync(directory).filter((f) => f !== '.DS_Store');
 
 	for (const entry of entries) {
@@ -158,29 +145,33 @@ async function processDirectory(directory) {
 		if (stat.isDirectory()) {
 			await processDirectory(fullPath); // Recurse into subdirectories
 		} else {
-			console.log({entry});
-			await checkAndProcessFile(fullPath, entry, directory);
+			await processVideo(fullPath, entry, directory);
 		}
 	}
+};
+
+await installWhisperCpp({to: WHISPER_PATH, version: WHISPER_VERSION});
+await downloadWhisperModel({folder: WHISPER_PATH, model: WHISPER_MODEL});
+
+// read arguments for filename if given else process all files in the directory
+const hasArgs = process.argv.length > 2;
+
+if (!hasArgs) {
+	await processDirectory(path.join(process.cwd(), 'public'));
+	process.exit(0);
 }
 
-(async () => {
-	// read arguments for filename if given else process all files in the directory
-	const hasArgs = process.argv.length > 2;
-	if (!hasArgs) {
-		await processDirectory(path.join(process.cwd(), 'public'));
-		return;
+for (const arg of process.argv.slice(2)) {
+	const fullPath = path.join(process.cwd(), arg);
+	const stat = lstatSync(fullPath);
+
+	if (stat.isDirectory()) {
+		await processDirectory(fullPath);
+		continue;
 	}
-	process.argv.slice(2).forEach(async (arg) => {
-		const fullPath = path.join(process.cwd(), arg);
-		const stat = lstatSync(fullPath);
-		if (stat.isDirectory()) {
-			await processDirectory(fullPath);
-		} else {
-			console.log(`Processing file ${fullPath}`);
-			const directory = path.dirname(fullPath);
-			const fileName = path.basename(fullPath);
-			await checkAndProcessFile(fullPath, fileName, directory);
-		}
-	});
-})();
+
+	console.log(`Processing file ${fullPath}`);
+	const directory = path.dirname(fullPath);
+	const fileName = path.basename(fullPath);
+	await processVideo(fullPath, fileName, directory);
+}
