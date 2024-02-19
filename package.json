@@ -16,6 +16,7 @@
 		"@remotion/zod-types": "^4.0.115",
 		"@remotion/animation-utils": "^4.0.115",
 		"@remotion/layout-utils": "^4.0.115",
+		"@remotion/media-utils": "^4.0.115",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
 		"remotion": "^4.0.115",

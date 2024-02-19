@@ -1,5 +1,9 @@
 import {Composition, staticFile} from 'remotion';
-import {CaptionedVideo} from './CaptionedVideo';
+import {
+	CaptionedVideo,
+	calculateCaptionedVideoMetadata,
+	captionedVideoSchema,
+} from './CaptionedVideo';
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -8,8 +12,8 @@ export const RemotionRoot: React.FC = () => {
 		<Composition
 			id="CaptionedVideo"
 			component={CaptionedVideo}
-			durationInFrames={400}
-			fps={30}
+			calculateMetadata={calculateCaptionedVideoMetadata}
+			schema={captionedVideoSchema}
 			width={1080}
 			height={1920}
 			defaultProps={{

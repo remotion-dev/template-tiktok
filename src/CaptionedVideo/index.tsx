@@ -1,12 +1,15 @@
 import {useCallback, useEffect, useState} from 'react';
 import {
 	AbsoluteFill,
+	CalculateMetadataFunction,
 	cancelRender,
 	OffthreadVideo,
 	Sequence,
 	useVideoConfig,
 } from 'remotion';
+import {z} from 'zod';
 import Subtitle from './Subtitle';
+import {getVideoMetadata} from '@remotion/media-utils';
 
 export type SubtitleProp = {
 	offsets: {
@@ -14,6 +17,21 @@ export type SubtitleProp = {
 		to: number;
 	};
 	text: string;
+};
+
+export const captionedVideoSchema = z.object({
+	src: z.string(),
+});
+
+export const calculateCaptionedVideoMetadata: CalculateMetadataFunction<
+	z.infer<typeof captionedVideoSchema>
+> = async ({props}) => {
+	const fps = 30;
+	const metadata = await getVideoMetadata(props.src);
+	return {
+		fps,
+		durationInFrames: Math.floor(metadata.durationInSeconds * fps),
+	};
 };
 
 export const CaptionedVideo: React.FC<{
