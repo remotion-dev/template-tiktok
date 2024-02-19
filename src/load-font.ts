@@ -1,12 +1,12 @@
-import {cancelRender, continueRender, delayRender, staticFile} from 'remotion';
+import {continueRender, delayRender, staticFile} from 'remotion';
 
 export const TheBoldFont = `TheBoldFont`;
 
 let loaded = false;
 
-export const loadFont = () => {
+export const loadFont = async (): Promise<void> => {
 	if (loaded) {
-		return;
+		return Promise.resolve();
 	}
 
 	const waitForFont = delayRender();
@@ -18,13 +18,8 @@ export const loadFont = () => {
 		`url('${staticFile('theboldfont.ttf')}') format('truetype')`,
 	);
 
-	font
-		.load()
-		.then(() => {
-			document.fonts.add(font);
-			continueRender(waitForFont);
-		})
-		.catch((err) => {
-			cancelRender(err);
-		});
+	await font.load();
+	document.fonts.add(font);
+
+	continueRender(waitForFont);
 };

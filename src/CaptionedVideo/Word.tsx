@@ -25,7 +25,7 @@ export const Word: React.FC<{
 	return (
 		<AbsoluteFill
 			style={{
-				justifyContent: 'flex-end',
+				justifyContent: 'center',
 				alignItems: 'center',
 				top: undefined,
 				bottom: 350,

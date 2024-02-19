@@ -10,7 +10,7 @@ const Subtitle: React.FC<{text: string}> = ({text}) => {
 	const {fps} = useVideoConfig();
 
 	const enter = spring({
-		frame: frame,
+		frame,
 		fps,
 		config: {
 			damping: 200,
@@ -22,10 +22,10 @@ const Subtitle: React.FC<{text: string}> = ({text}) => {
 	return (
 		<AbsoluteFill>
 			<AbsoluteFill>
-				<Word enterProgress={enter} text={text} stroke></Word>
+				<Word stroke enterProgress={enter} text={text} />
 			</AbsoluteFill>
 			<AbsoluteFill>
-				<Word enterProgress={enter} text={text} stroke={false}></Word>
+				<Word enterProgress={enter} text={text} stroke={false} />
 			</AbsoluteFill>
 		</AbsoluteFill>
 	);

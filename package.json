@@ -1,7 +1,7 @@
 {
-	"name": "template-caption",
+	"name": "template-tiktok",
 	"version": "1.0.0",
-	"description": "A Remotion template with TikTok-style captions",
+	"description": "A Remotion template for TikTok-style captions",
 	"scripts": {
 		"start": "remotion studio",
 		"build": "remotion render CaptionedVideo out/video.mp4",
