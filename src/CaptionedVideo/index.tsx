@@ -1,5 +1,11 @@
 import {useEffect, useState} from 'react';
-import {AbsoluteFill, cancelRender, OffthreadVideo, staticFile} from 'remotion';
+import {
+	AbsoluteFill,
+	cancelRender,
+	OffthreadVideo,
+	Sequence,
+	useVideoConfig,
+} from 'remotion';
 import Subtitle from './Subtitle';
 
 export type SubtitleProp = {
@@ -10,12 +16,15 @@ export type SubtitleProp = {
 	text: string;
 };
 
-export const SubbedVideo: React.FC = () => {
+export const CaptionedVideo: React.FC<{
+	src: string;
+}> = ({src}) => {
 	const [subtitles, setSubtitles] = useState<SubtitleProp[]>([]);
+	const {fps} = useVideoConfig();
 
 	useEffect(() => {
 		// Fetch the subtitles saved in public folder from the server
-		fetch(staticFile('sample-video.json'))
+		fetch(src.replace(/.mp4$/, '.json'))
 			.then((res) => {
 				return res.json();
 			})
@@ -31,10 +40,20 @@ export const SubbedVideo: React.FC = () => {
 	return (
 		<AbsoluteFill style={{backgroundColor: 'white'}}>
 			<AbsoluteFill>
-				<OffthreadVideo src={staticFile('sample-video.mp4')} />
+				<OffthreadVideo src={src} />
 			</AbsoluteFill>
 			{subtitles.map((subtitle, index) => {
-				return <Subtitle key={index} subtitle={subtitle} />;
+				const subtitleStartFrame = (subtitle.offsets.from * fps) / 1000;
+				const subtitleEndFrame = (subtitle.offsets.to * fps) / 1000;
+
+				return (
+					<Sequence
+						from={subtitleStartFrame}
+						durationInFrames={subtitleEndFrame - subtitleStartFrame}
+					>
+						<Subtitle key={index} text={subtitle.text} />;
+					</Sequence>
+				);
 			})}
 		</AbsoluteFill>
 	);
