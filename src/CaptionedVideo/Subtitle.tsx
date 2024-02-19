@@ -1,9 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, spring, useCurrentFrame, useVideoConfig} from 'remotion';
-import {loadFont} from '../load-font';
 import {Word} from './Word';
-
-loadFont();
 
 const Subtitle: React.FC<{text: string}> = ({text}) => {
 	const frame = useCurrentFrame();

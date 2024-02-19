@@ -12,6 +12,7 @@ import {
 import {z} from 'zod';
 import Subtitle from './Subtitle';
 import {getVideoMetadata} from '@remotion/media-utils';
+import {ZoomInEffect} from '../ZoomInEffect';
 import {loadFont} from '../load-font';
 
 export type SubtitleProp = {
@@ -29,8 +30,6 @@ export const captionedVideoSchema = z.object({
 export const calculateCaptionedVideoMetadata: CalculateMetadataFunction<
 	z.infer<typeof captionedVideoSchema>
 > = async ({props}) => {
-	await loadFont();
-
 	const fps = 30;
 	const metadata = await getVideoMetadata(props.src);
 
@@ -58,6 +57,7 @@ export const CaptionedVideo: React.FC<{
 		}
 
 		try {
+			await loadFont();
 			const res = await fetch(subtitlesFile);
 			const data = await res.json();
 			setSubtitles(data.transcription);
@@ -69,25 +69,28 @@ export const CaptionedVideo: React.FC<{
 	useEffect(() => {
 		fetchSubtitles();
 
-		const c = watchStaticFile(src, () => {
+		// TODO: Does not work, maybe with 4.0.116
+		const c = watchStaticFile(subtitlesFile, () => {
 			fetchSubtitles();
 		});
 
 		return () => {
 			c.cancel();
 		};
-	}, [fetchSubtitles, src]);
+	}, [fetchSubtitles, src, subtitlesFile]);
 
 	// A <AbsoluteFill> is just a absolutely positioned <div>!
 	return (
 		<AbsoluteFill style={{backgroundColor: 'white'}}>
 			<AbsoluteFill>
-				<OffthreadVideo
-					style={{
-						objectFit: 'cover',
-					}}
-					src={src}
-				/>
+				<ZoomInEffect>
+					<OffthreadVideo
+						style={{
+							objectFit: 'cover',
+						}}
+						src={src}
+					/>
+				</ZoomInEffect>
 			</AbsoluteFill>
 			{subtitles.map((subtitle, index) => {
 				const subtitleStartFrame = (subtitle.offsets.from * fps) / 1000;

@@ -37,26 +37,25 @@ npm run build
 npm run upgrade
 ```
 
-**Install Whisper for video transcription**
-
-```console
-node whisper-init.mjs
-```
-
 **To Generate Video Transcript**
+
 - All the videos in the `public` folder
+
 ```console
-npm run create-subtitles
-```
-- Specific video file
-```console
-npm run create-subtitles -- <path-to-video-file>
-```
-- All the videos in a specific folder
-```console
-npm run create-subtitles -- <path-to-folder>
+node sub.mjs
 ```
 
+- Specific video file
+
+```console
+node sub.mjs <path-to-video-file>
+```
+
+- All the videos in a specific folder
+
+```console
+node sub.mjs <path-to-folder>
+```
 
 ## Docs
 
