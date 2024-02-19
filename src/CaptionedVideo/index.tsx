@@ -14,6 +14,7 @@ import Subtitle from './Subtitle';
 import {getVideoMetadata} from '@remotion/media-utils';
 import {ZoomInEffect} from '../ZoomInEffect';
 import {loadFont} from '../load-font';
+import {NoCaptionFile} from './NoCaptionFile';
 
 export type SubtitleProp = {
 	offsets: {
@@ -105,6 +106,7 @@ export const CaptionedVideo: React.FC<{
 					</Sequence>
 				);
 			})}
+			{fileExists ? null : <NoCaptionFile />}
 		</AbsoluteFill>
 	);
 };

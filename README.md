@@ -37,7 +37,9 @@ npm run build
 npm run upgrade
 ```
 
-**To Generate Video Transcript**
+**Captioning**
+
+Any of these commands will download Whisper.cpp on the first run and download the `medium` model (~1.5GB).
 
 - All the videos in the `public` folder
 
