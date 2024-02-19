@@ -1,7 +1,7 @@
 {
-  "name": "whisper-template",
+  "name": "template-caption",
   "version": "1.0.0",
-  "description": "My Remotion video",
+  "description": "A Remotion template with TikTok-style captions",
   "scripts": {
     "start": "remotion studio",
     "build": "remotion render SubbedVideo out/video.mp4",
@@ -24,8 +24,7 @@
     "@types/react": "^18.0.26",
     "@types/web": "^0.0.86",
     "eslint": "^8.43.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.2.5",
     "typescript": "^4.9.4"
-  },
-  "packageManager": "npm@9.6.7"
+  }
 }
