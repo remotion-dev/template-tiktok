@@ -12,15 +12,15 @@
   "repository": {},
   "license": "UNLICENSED",
   "dependencies": {
-    "@remotion/cli": "^4.0.114",
-    "@remotion/zod-types": "^4.0.114",
+    "@remotion/cli": "4.0.115",
+    "@remotion/zod-types": "4.0.115",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "remotion": "^4.0.114",
+    "remotion": "4.0.115",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@remotion/eslint-config": "^4.0.114",
+    "@remotion/eslint-config": "4.0.115",
     "@types/react": "^18.0.26",
     "@types/web": "^0.0.86",
     "eslint": "^8.43.0",

@@ -20,9 +20,9 @@ const downloadWindowsBinary = async () => {
 	execSync(
 		`Expand-Archive -Force ${filePath} ${path.join(
 			process.cwd(),
-			'whisper-bin-x64'
+			'whisper-bin-x64',
 		)}`,
-		{shell: 'powershell', stdio: 'inherit'}
+		{shell: 'powershell', stdio: 'inherit'},
 	);
 };
 
@@ -107,7 +107,7 @@ const askForPermission = async () => {
 				signal.removeEventListener('abort', onAbort);
 				resolve(userInput);
 				readline.close();
-			}
+			},
 		);
 	});
 

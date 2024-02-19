@@ -7,7 +7,6 @@ import {
 	lstatSync,
 	mkdirSync,
 	readdirSync,
-	rmdirSync,
 } from 'node:fs';
 import os from 'node:os';
 import path from 'path';
@@ -68,7 +67,7 @@ const isWhisperInstalled = () => {
 const extractToTempAudioFile = (fileToTranscribe, tempOutFile) => {
 	// extracting audio from mp4 and save it as 16khz wav file
 	execSync(
-		`npx remotion ffmpeg -i ${fileToTranscribe} -ar 16000 ${tempOutFile}`
+		`npx remotion ffmpeg -i ${fileToTranscribe} -ar 16000 ${tempOutFile}`,
 	);
 };
 
@@ -77,7 +76,7 @@ const subFile = async (filePath, fileName, folder) => {
 	console.log({fileName});
 	const outPath = path.join(
 		process.cwd(),
-		`public/${folder}/${fileName.replace('.wav', '.json')}`
+		`public/${folder}/${fileName.replace('.wav', '.json')}`,
 	);
 
 	if (os.platform() === 'darwin' || os.platform() === 'linux') {
@@ -85,14 +84,14 @@ const subFile = async (filePath, fileName, folder) => {
 			`./main -f ${filePath} --output-file ${
 				outPath.split('.')[0]
 			} --output-json --max-len 1 `,
-			{cwd: path.join(process.cwd(), 'whisper.cpp')}
+			{cwd: path.join(process.cwd(), 'whisper.cpp')},
 		);
 	} else if (os.platform() === 'win32') {
 		execSync(
 			`main.exe -f ${filePath} --output-file ${
 				outPath.split('.')[0]
 			} --output-json --max-len 1 `,
-			{cwd: path.join(process.cwd(), 'whisper-bin-x64')}
+			{cwd: path.join(process.cwd(), 'whisper-bin-x64')},
 		);
 	}
 
@@ -123,7 +122,7 @@ const checkAndProcessFile = async (fullPath, entry, directory) => {
 	}
 
 	const isTranscribed = existsSync(
-		fullPath.replace('.mp4', '.json').replace('webcam', 'subs')
+		fullPath.replace('.mp4', '.json').replace('webcam', 'subs'),
 	);
 	if (isTranscribed) {
 		return;
@@ -142,10 +141,10 @@ const checkAndProcessFile = async (fullPath, entry, directory) => {
 	await subFile(
 		tempOutFilePath,
 		tempWavFileName,
-		path.relative('public', directory)
+		path.relative('public', directory),
 	);
 	if (shouldRemoveTempDirectory) {
-		rmdirSync(path.join(process.cwd(), 'temp'), {recursive: true});
+		rmSync(path.join(process.cwd(), 'temp'), {recursive: true});
 	}
 };
 
