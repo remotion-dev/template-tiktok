@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
 	AbsoluteFill,
 	cancelRender,
@@ -22,18 +22,19 @@ export const CaptionedVideo: React.FC<{
 	const [subtitles, setSubtitles] = useState<SubtitleProp[]>([]);
 	const {fps} = useVideoConfig();
 
+	const fetchSubtitles = useCallback(async () => {
+		try {
+			const subtitlesFile = src.replace(/.mp4$/, '.json');
+			const res = await fetch(subtitlesFile);
+			const data = await res.json();
+			setSubtitles(data.transcription);
+		} catch (e) {
+			cancelRender(e);
+		}
+	}, []);
+
 	useEffect(() => {
-		// Fetch the subtitles saved in public folder from the server
-		fetch(src.replace(/.mp4$/, '.json'))
-			.then((res) => {
-				return res.json();
-			})
-			.then((data) => {
-				setSubtitles(data.transcription);
-			})
-			.catch((err) => {
-				cancelRender(err);
-			});
+		fetchSubtitles();
 	}, []);
 
 	// A <AbsoluteFill> is just a absolutely positioned <div>!
