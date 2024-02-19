@@ -1,30 +1,31 @@
 {
-  "name": "template-caption",
-  "version": "1.0.0",
-  "description": "A Remotion template with TikTok-style captions",
-  "scripts": {
-    "start": "remotion studio",
-    "build": "remotion render SubbedVideo out/video.mp4",
-    "upgrade": "remotion upgrade",
-    "test": "eslint src --ext ts,tsx,js,jsx && tsc",
-    "create-subtitles": "node sub.mjs"
-  },
-  "repository": {},
-  "license": "UNLICENSED",
-  "dependencies": {
-    "@remotion/cli": "4.0.115",
-    "@remotion/zod-types": "4.0.115",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "remotion": "4.0.115",
-    "zod": "^3.21.4"
-  },
-  "devDependencies": {
-    "@remotion/eslint-config": "4.0.115",
-    "@types/react": "^18.0.26",
-    "@types/web": "^0.0.86",
-    "eslint": "^8.43.0",
-    "prettier": "^3.2.5",
-    "typescript": "^4.9.4"
-  }
+	"name": "template-caption",
+	"version": "1.0.0",
+	"description": "A Remotion template with TikTok-style captions",
+	"scripts": {
+		"start": "remotion studio",
+		"build": "remotion render SubbedVideo out/video.mp4",
+		"upgrade": "remotion upgrade",
+		"test": "eslint src --ext ts,tsx,js,jsx && tsc",
+		"create-subtitles": "node sub.mjs"
+	},
+	"repository": {},
+	"license": "UNLICENSED",
+	"dependencies": {
+		"@remotion/cli": "^4.0.115",
+		"@remotion/zod-types": "^4.0.115",
+		"react": "^18.0.0",
+		"react-dom": "^18.0.0",
+		"remotion": "^4.0.115",
+		"zod": "^3.21.4"
+	},
+	"devDependencies": {
+		"@remotion/eslint-config": "^4.0.115",
+		"@remotion/install-whisper-cpp": "^4.0.115",
+		"@types/react": "^18.0.26",
+		"@types/web": "^0.0.86",
+		"eslint": "^8.43.0",
+		"prettier": "^3.2.5",
+		"typescript": "^4.9.4"
+	}
 }
