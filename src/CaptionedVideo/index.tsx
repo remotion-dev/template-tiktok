@@ -40,6 +40,14 @@ export const calculateCaptionedVideoMetadata: CalculateMetadataFunction<
 	};
 };
 
+const getFileExists = (file: string) => {
+	const files = getStaticFiles();
+	const fileExists = files.find((f) => {
+		return f.src === file;
+	});
+	return Boolean(fileExists);
+};
+
 export const CaptionedVideo: React.FC<{
 	src: string;
 }> = ({src}) => {
@@ -47,16 +55,8 @@ export const CaptionedVideo: React.FC<{
 	const {fps} = useVideoConfig();
 
 	const subtitlesFile = src.replace(/.mp4$/, '.json');
-	const files = getStaticFiles();
-	const fileExists = files.find((f) => {
-		return f.src === subtitlesFile;
-	});
 
 	const fetchSubtitles = useCallback(async () => {
-		if (!fileExists) {
-			return;
-		}
-
 		try {
 			await loadFont();
 			const res = await fetch(subtitlesFile);
@@ -65,12 +65,11 @@ export const CaptionedVideo: React.FC<{
 		} catch (e) {
 			cancelRender(e);
 		}
-	}, [fileExists, subtitlesFile]);
+	}, [subtitlesFile]);
 
 	useEffect(() => {
 		fetchSubtitles();
 
-		// TODO: Does not work, maybe with 4.0.116
 		const c = watchStaticFile(subtitlesFile, () => {
 			fetchSubtitles();
 		});
@@ -106,7 +105,7 @@ export const CaptionedVideo: React.FC<{
 					</Sequence>
 				);
 			})}
-			{fileExists ? null : <NoCaptionFile />}
+			{getFileExists(subtitlesFile) ? null : <NoCaptionFile />}
 		</AbsoluteFill>
 	);
 };
