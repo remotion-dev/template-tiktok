@@ -53,7 +53,11 @@ export const CaptionedVideo: React.FC<{
 	const [subtitles, setSubtitles] = useState<SubtitleProp[]>([]);
 	const {fps} = useVideoConfig();
 
-	const subtitlesFile = src.replace(/.mp4$/, '.json');
+	const subtitlesFile = src
+		.replace(/.mp4$/, '.json')
+		.replace(/.mkv$/, '.json')
+		.replace(/.mov$/, '.json')
+		.replace(/.webm$/, '.json');
 
 	const fetchSubtitles = useCallback(async () => {
 		try {

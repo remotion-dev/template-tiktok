@@ -110,12 +110,22 @@ const subFile = async (filePath, fileName, folder) => {
 };
 
 const processVideo = async (fullPath, entry, directory) => {
-	if (!fullPath.endsWith('.mp4')) {
+	if (
+		!fullPath.endsWith('.mp4') &&
+		!fullPath.endsWith('.webm') &&
+		!fullPath.endsWith('.mkv') &&
+		!fullPath.endsWith('.mov')
+	) {
 		return;
 	}
 
 	const isTranscribed = existsSync(
-		fullPath.replace('.mp4', '.json').replace('webcam', 'subs'),
+		fullPath
+			.replace(/.mp4$/, '.json')
+			.replace(/.mkv$/, '.json')
+			.replace(/.mov$/, '.json')
+			.replace(/.webm$/, '.json')
+			.replace('webcam', 'subs'),
 	);
 	if (isTranscribed) {
 		return;
