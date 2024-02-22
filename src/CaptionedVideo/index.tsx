@@ -12,7 +12,6 @@ import {
 import {z} from 'zod';
 import Subtitle from './Subtitle';
 import {getVideoMetadata} from '@remotion/media-utils';
-import {ZoomInEffect} from '../ZoomInEffect';
 import {loadFont} from '../load-font';
 import {NoCaptionFile} from './NoCaptionFile';
 
@@ -83,14 +82,12 @@ export const CaptionedVideo: React.FC<{
 	return (
 		<AbsoluteFill style={{backgroundColor: 'white'}}>
 			<AbsoluteFill>
-				<ZoomInEffect>
-					<OffthreadVideo
-						style={{
-							objectFit: 'cover',
-						}}
-						src={src}
-					/>
-				</ZoomInEffect>
+				<OffthreadVideo
+					style={{
+						objectFit: 'cover',
+					}}
+					src={src}
+				/>
 			</AbsoluteFill>
 			{subtitles.map((subtitle, index) => {
 				const subtitleStartFrame = (subtitle.offsets.from * fps) / 1000;
