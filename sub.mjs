@@ -28,7 +28,7 @@ function mergeTranscriptions(transcriptions) {
 	let currentTo = '';
 
 	transcriptions.forEach((item, index) => {
-		const text = item.text;
+		const {text} = item;
 		// If text starts with a space, push the currentText (if it exists) and start a new one
 		if (text.startsWith(' ') && currentTo - currentFrom > 200) {
 			if (currentText !== '') {
@@ -64,7 +64,7 @@ function mergeTranscriptions(transcriptions) {
 }
 
 const extractToTempAudioFile = (fileToTranscribe, tempOutFile) => {
-	// extracting audio from mp4 and save it as 16khz wav file
+	// Extracting audio from mp4 and save it as 16khz wav file
 	execSync(
 		`npx remotion ffmpeg -i ${fileToTranscribe} -ar 16000 ${tempOutFile} -y`,
 		{stdio: 'inherit'},
@@ -78,19 +78,24 @@ const subFile = async (filePath, fileName, folder) => {
 		folder,
 		fileName.replace('.wav', '.json'),
 	);
+	const tempOutPath = path.join(
+		process.cwd(),
+		'public',
+		folder,
+		`_${fileName.replace('.wav', '.json')}`,
+	);
 
 	const executable = os.platform() === 'win32' ? 'main.exe' : './main';
 
 	const modelPath = path.join(WHISPER_PATH, `ggml-${WHISPER_MODEL}.bin`);
+	const tempOutputWithOutExt = tempOutPath.replace('.json', '');
 
 	execSync(
-		`${executable} -f ${filePath} --output-file ${
-			outPath.split('.')[0]
-		} --output-json --max-len 1 -m ${modelPath}`,
+		`${executable} -f ${filePath} --output-file ${tempOutputWithOutExt} --output-json --max-len 1 -m ${modelPath}`,
 		{cwd: WHISPER_PATH},
 	);
 
-	let json = readFileSync(outPath, 'utf8');
+	const json = readFileSync(tempOutPath, 'utf8');
 	const parsedJson = await JSON.parse(json);
 	const mergedTranscriptions = mergeTranscriptions(parsedJson.transcription);
 	parsedJson.transcription = mergedTranscriptions;
@@ -101,6 +106,7 @@ const subFile = async (filePath, fileName, folder) => {
 	});
 	writeFileSync(outPath.replace('webcam', 'subs'), formatted);
 	rmSync(filePath);
+	rmSync(tempOutPath);
 };
 
 const processVideo = async (fullPath, entry, directory) => {
@@ -153,7 +159,7 @@ const processDirectory = async (directory) => {
 await installWhisperCpp({to: WHISPER_PATH, version: WHISPER_VERSION});
 await downloadWhisperModel({folder: WHISPER_PATH, model: WHISPER_MODEL});
 
-// read arguments for filename if given else process all files in the directory
+// Read arguments for filename if given else process all files in the directory
 const hasArgs = process.argv.length > 2;
 
 if (!hasArgs) {

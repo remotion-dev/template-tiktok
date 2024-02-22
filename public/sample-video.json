@@ -1,0 +1,43 @@
+{
+  "systeminfo": "AVX = 0 | AVX2 = 0 | AVX512 = 0 | FMA = 0 | NEON = 1 | ARM_FMA = 1 | METAL = 1 | F16C = 0 | FP16_VA = 1 | WASM_SIMD = 0 | BLAS = 1 | SSE3 = 0 | SSSE3 = 0 | VSX = 0 | CUDA = 0 | COREML = 0 | OPENVINO = 0 | ",
+  "model": {
+    "type": "medium",
+    "multilingual": false,
+    "vocab": 51864,
+    "audio": { "ctx": 1500, "state": 1024, "head": 16, "layer": 24 },
+    "text": { "ctx": 448, "state": 1024, "head": 16, "layer": 24 },
+    "mels": 80,
+    "ftype": 1
+  },
+  "params": {
+    "model": "/Users/jonathanburger/template-whisper-subtitle/whisper.cpp/ggml-medium.en.bin",
+    "language": "en",
+    "translate": false
+  },
+  "result": { "language": "en" },
+  "transcription": [
+    { "offsets": { "from": 40, "to": 330 }, "text": " Using" },
+    { "offsets": { "from": 330, "to": 980 }, "text": "Remotion's" },
+    { "offsets": { "from": 980, "to": 1440 }, "text": "TikTok" },
+    { "offsets": { "from": 1440, "to": 1950 }, "text": "template" },
+    { "offsets": { "from": 1950, "to": 2320 }, "text": "you can" },
+    { "offsets": { "from": 2320, "to": 2780 }, "text": "create" },
+    { "offsets": { "from": 2780, "to": 3780 }, "text": "engaging" },
+    { "offsets": { "from": 3780, "to": 4390 }, "text": "reels" },
+    { "offsets": { "from": 4390, "to": 4960 }, "text": "and" },
+    { "offsets": { "from": 4960, "to": 5720 }, "text": "TikToks" },
+    { "offsets": { "from": 5720, "to": 5980 }, "text": "by" },
+    { "offsets": { "from": 5980, "to": 7120 }, "text": "transcribing" },
+    { "offsets": { "from": 7120, "to": 7520 }, "text": "your" },
+    { "offsets": { "from": 7520, "to": 8040 }, "text": "audio" },
+    { "offsets": { "from": 8040, "to": 8520 }, "text": "using" },
+    { "offsets": { "from": 8520, "to": 9320 }, "text": "whisper" },
+    { "offsets": { "from": 9320, "to": 9610 }, "text": "CPP" },
+    { "offsets": { "from": 9610, "to": 9900 }, "text": "and" },
+    { "offsets": { "from": 9900, "to": 10400 }, "text": "animating" },
+    { "offsets": { "from": 10400, "to": 10740 }, "text": "your" },
+    { "offsets": { "from": 10740, "to": 11360 }, "text": "captions" },
+    { "offsets": { "from": 11360, "to": 11580 }, "text": "with" },
+    { "offsets": { "from": 11580, "to": 11880 }, "text": "React." }
+  ]
+}
