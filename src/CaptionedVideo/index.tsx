@@ -3,6 +3,8 @@ import {
 	AbsoluteFill,
 	CalculateMetadataFunction,
 	cancelRender,
+	continueRender,
+	delayRender,
 	getStaticFiles,
 	OffthreadVideo,
 	Sequence,
@@ -51,6 +53,7 @@ export const CaptionedVideo: React.FC<{
 	src: string;
 }> = ({src}) => {
 	const [subtitles, setSubtitles] = useState<SubtitleProp[]>([]);
+	const [handle] = useState(() => delayRender());
 	const {fps} = useVideoConfig();
 
 	const subtitlesFile = src
@@ -65,10 +68,11 @@ export const CaptionedVideo: React.FC<{
 			const res = await fetch(subtitlesFile);
 			const data = await res.json();
 			setSubtitles(data.transcription);
+			continueRender(handle);
 		} catch (e) {
 			cancelRender(e);
 		}
-	}, [subtitlesFile]);
+	}, [handle, subtitlesFile]);
 
 	useEffect(() => {
 		fetchSubtitles();
@@ -82,7 +86,6 @@ export const CaptionedVideo: React.FC<{
 		};
 	}, [fetchSubtitles, src, subtitlesFile]);
 
-	// A <AbsoluteFill> is just a absolutely positioned <div>!
 	return (
 		<AbsoluteFill style={{backgroundColor: 'white'}}>
 			<AbsoluteFill>
