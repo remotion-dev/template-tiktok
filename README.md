@@ -37,27 +37,30 @@ npm run build
 npm run upgrade
 ```
 
-**Captioning**
+## Captioning
 
-Any of these commands will download Whisper.cpp on the first run and download the `medium` model (~1.5GB).
-
-- All the videos in the `public` folder
+Replace the `sample-video.mp4` with your video file.
+Caption all the videos in you `public` by running the following command:
 
 ```console
 node sub.mjs
 ```
 
-- Specific video file
+Only caption a specific video:
 
 ```console
 node sub.mjs <path-to-video-file>
 ```
 
-- All the videos in a specific folder
+Only caption a specific folder:
 
 ```console
 node sub.mjs <path-to-folder>
 ```
+
+## Configure Whisper.cpp
+
+Captioning will download Whisper.cpp and the 1.5GB big `medium.en` model. To configure which model is being used, you can configure the variables in `whisper-config.mjs`.
 
 ## Docs
 
@@ -65,7 +68,7 @@ Get started with Remotion by reading the [fundamentals page](https://www.remotio
 
 ## Help
 
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
+We provide help on our [Discord server](https://remotion.dev/discord).
 
 ## Issues
 
