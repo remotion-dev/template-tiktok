@@ -18,10 +18,7 @@ import {loadFont} from '../load-font';
 import {NoCaptionFile} from './NoCaptionFile';
 
 export type SubtitleProp = {
-	offsets: {
-		from: number;
-		to: number;
-	};
+	startInSeconds: number;
 	text: string;
 };
 
@@ -97,8 +94,12 @@ export const CaptionedVideo: React.FC<{
 				/>
 			</AbsoluteFill>
 			{subtitles.map((subtitle, index) => {
-				const subtitleStartFrame = (subtitle.offsets.from * fps) / 1000;
-				const subtitleEndFrame = (subtitle.offsets.to * fps) / 1000;
+				const nextSubtitle = subtitles[index + 1] ?? null;
+				const subtitleStartFrame = subtitle.startInSeconds * fps;
+				const subtitleEndFrame = Math.min(
+					nextSubtitle ? nextSubtitle.startInSeconds * fps : Infinity,
+					subtitleStartFrame + fps,
+				);
 
 				return (
 					<Sequence

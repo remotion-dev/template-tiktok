@@ -4,7 +4,7 @@ import path from 'node:path';
 export const WHISPER_PATH = path.join(process.cwd(), 'whisper.cpp');
 
 // The version of Whisper.cpp to install
-export const WHISPER_VERSION = '1.5.4';
+export const WHISPER_VERSION = '48a145';
 
 // Which model to use.
 // | Model      | Disk   | Mem      |
