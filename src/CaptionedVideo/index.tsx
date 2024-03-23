@@ -100,11 +100,15 @@ export const CaptionedVideo: React.FC<{
 					nextSubtitle ? nextSubtitle.startInSeconds * fps : Infinity,
 					subtitleStartFrame + fps,
 				);
+				const durationInFrames = subtitleEndFrame - subtitleStartFrame;
+				if (durationInFrames <= 0) {
+					return null;
+				}
 
 				return (
 					<Sequence
 						from={subtitleStartFrame}
-						durationInFrames={subtitleEndFrame - subtitleStartFrame}
+						durationInFrames={durationInFrames}
 					>
 						<Subtitle key={index} text={subtitle.text} />;
 					</Sequence>
