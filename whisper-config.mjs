@@ -1,10 +1,10 @@
-import path from "node:path";
+import path from 'node:path';
 
 // Where to install Whisper.cpp to
-export const WHISPER_PATH = path.join(process.cwd(), "whisper.cpp");
+export const WHISPER_PATH = path.join(process.cwd(), 'whisper.cpp');
 
 // The version of Whisper.cpp to install
-export const WHISPER_VERSION = "1.5.5";
+export const WHISPER_VERSION = '1.5.5';
 
 // Which model to use.
 // | Model      | Disk   | Mem      |
@@ -24,9 +24,9 @@ export const WHISPER_VERSION = "1.5.5";
 /**
  * @type {import('@remotion/install-whisper-cpp').WhisperModel}
  */
-export const WHISPER_MODEL = "medium.en";
+export const WHISPER_MODEL = 'medium.en';
 
 // Language to transcribe
 // If you set another language than 'en', remove .en from the WHISPER_MODEL
 // List of languages: https://github.com/openai/whisper/blob/main/whisper/tokenizer.py
-export const WHISPER_LANG = "en";
+export const WHISPER_LANG = 'en';
