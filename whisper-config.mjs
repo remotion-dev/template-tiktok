@@ -29,4 +29,7 @@ export const WHISPER_MODEL = 'medium.en';
 // Language to transcribe
 // If you set another language than 'en', remove .en from the WHISPER_MODEL
 // List of languages: https://github.com/openai/whisper/blob/main/whisper/tokenizer.py
+/**
+ * @type {import('@remotion/install-whisper-cpp').Language}
+ */
 export const WHISPER_LANG = 'en';
