@@ -9,6 +9,7 @@ import {
 } from 'node:fs';
 import path from 'path';
 import {
+	WHISPER_LANG,
 	WHISPER_MODEL,
 	WHISPER_PATH,
 	WHISPER_VERSION,
@@ -43,6 +44,7 @@ const subFile = async (filePath, fileName, folder) => {
 		whisperPath: WHISPER_PATH,
 		printOutput: false,
 		translateToEnglish: false,
+		language: WHISPER_LANG,
 	});
 
 	const {captions} = convertToCaptions({
