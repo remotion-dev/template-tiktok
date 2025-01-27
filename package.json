@@ -6,7 +6,7 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src --ext ts,tsx,js,jsx && tsc",
+    "lint": "eslint src && tsc",
     "create-subtitles": "node sub.mjs"
   },
   "repository": {},
@@ -23,12 +23,12 @@
     "zod": "3.22.3"
   },
   "devDependencies": {
-    "@remotion/eslint-config": "^4.0.0",
+    "@remotion/eslint-config-flat": "^4.0.0",
     "@remotion/install-whisper-cpp": "^4.0.0",
     "@remotion/captions": "^4.0.0",
     "@types/react": "19.0.0",
     "@types/web": "0.0.166",
-    "eslint": "8.57.1",
+    "eslint": "9.14.0",
     "prettier": "3.3.3",
     "typescript": "5.5.4"
   },
