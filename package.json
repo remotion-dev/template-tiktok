@@ -17,8 +17,8 @@
     "@remotion/animation-utils": "^4.0.0",
     "@remotion/layout-utils": "^4.0.0",
     "@remotion/media-utils": "^4.0.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "remotion": "^4.0.0",
     "zod": "3.22.3"
   },
@@ -26,11 +26,11 @@
     "@remotion/eslint-config-flat": "^4.0.0",
     "@remotion/install-whisper-cpp": "^4.0.0",
     "@remotion/captions": "^4.0.0",
-    "@types/react": "19.0.0",
+    "@types/react": "19.2.7",
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.6.0",
-    "typescript": "5.8.2"
+    "typescript": "5.9.3"
   },
   "private": true
 }
